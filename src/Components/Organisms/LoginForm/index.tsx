@@ -15,19 +15,13 @@ export const LoginForm: FunctionComponent<LoginFormProps> = ({ showModal }) => {
         className="login-form"
         initialValues={{ remember: true }}
       >
-        <Form.Item
-          name="username"
-          rules={[{ required: true, message: "Please input your Username!" }]}
-        >
+        <Form.Item name="username">
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Username"
           />
         </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[{ required: true, message: "Please input your Password!" }]}
-        >
+        <Form.Item name="password">
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"

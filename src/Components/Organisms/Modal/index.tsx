@@ -6,7 +6,6 @@ import React, {
 } from "react";
 import {
   Modal,
-  Avatar,
   List,
   Checkbox,
   Radio,
@@ -70,7 +69,7 @@ export const ModalComponent: FunctionComponent<ModalProps> = ({
       setIsLoading(true);
       axios
         .get(
-          "https://randomuser.me/api/?results=24&inc=name,cell,phone,picture"
+          "https://randomuser.me/api/?results=50&inc=name,cell,phone,picture"
         )
         .then(result => {
           if (result.data && result.data.results) {
@@ -117,42 +116,7 @@ export const ModalComponent: FunctionComponent<ModalProps> = ({
 
   const handleCheckBoxGroup1Change = (values: CheckboxValueType[]) => {
     setSearchValue("");
-    setSelectedDbs(prev => {
-      let final: string[] = [...prev];
-      if (values.length > 0) {
-        values.forEach(item => {
-          if (!prev.includes(item as string)) {
-            final.push(item as string);
-          }
-          let extra = checkBoxOptions.filter(item => !values.includes(item));
-          extra.forEach(item => {
-            let result = final.findIndex(itemInFinal => {
-              if (itemInFinal === item) {
-                return true;
-              }
-              return false;
-            });
-            if (result >= 0) {
-              final.splice(result, 1);
-            }
-          });
-        });
-      } else {
-        checkBoxOptions.forEach(item => {
-          let result = final.findIndex(itemInFinal => {
-            if (itemInFinal === item) {
-              return true;
-            }
-            return false;
-          });
-
-          if (result >= 0) {
-            final.splice(result, 1);
-          }
-        });
-      }
-      return final;
-    });
+    setSelectedDbs(values as string[]);
   };
 
   const handleSearchChange: ChangeEventHandler<HTMLInputElement> = e => {
@@ -201,7 +165,16 @@ export const ModalComponent: FunctionComponent<ModalProps> = ({
   };
 
   const handleSelectChange = (value: string) => {
+    setSearchValue("");
     setSearchType(value);
+    setCustomerList(listFilteredByDb);
+  };
+
+  const handleModalCancel = () => {
+    setSearchType("Name");
+    setSearchValue("");
+    setSelectedDbs([]);
+    handleCancel();
   };
 
   const selectAfter = (
@@ -220,7 +193,7 @@ export const ModalComponent: FunctionComponent<ModalProps> = ({
   return (
     <Modal
       visible={visible}
-      onCancel={handleCancel}
+      onCancel={handleModalCancel}
       footer={null}
       closable={true}
       bodyStyle={{ padding: 0 }}
@@ -249,6 +222,7 @@ export const ModalComponent: FunctionComponent<ModalProps> = ({
           <Checkbox.Group
             options={checkBoxOptions}
             onChange={handleCheckBoxGroup1Change}
+            value={selectedDbs}
           />
         </div>
         <div className="my-8">
@@ -260,7 +234,12 @@ export const ModalComponent: FunctionComponent<ModalProps> = ({
         </div>
 
         <div className="mb-0">
-          <Tag color="volcano">Total 24 items</Tag>
+          {customerList && customerList.length > 0 && (
+            <Tag color="volcano">
+              Total {customerList.length}{" "}
+              {customerList.length === 1 ? "item" : "items"}
+            </Tag>
+          )}
         </div>
 
         <div className="p-4">
