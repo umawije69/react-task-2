@@ -1,44 +1,31 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState } from "react";
 
-import styled from 'styled-components'
-import { LoginFormProps } from '../../Organisms/LoginForm'
-import { ModalProps } from '../../Organisms/Modal'
-import Title from 'antd/lib/typography/Title'
+import { LoginFormProps } from "../../Organisms/LoginForm";
+import { ModalProps } from "../../Organisms/Modal";
 
 interface LoginTemplateProps {
-
-    LoginForm: FunctionComponent<LoginFormProps>,
-    ModalComponent: FunctionComponent<ModalProps>
-
+  LoginForm: FunctionComponent<LoginFormProps>;
+  ModalComponent: FunctionComponent<ModalProps>;
 }
 
-const Wrapper = styled.div`
+export const LoginTemplate: FunctionComponent<LoginTemplateProps> = ({
+  LoginForm,
+  ModalComponent
+}) => {
+  const [visible, setVisible] = useState(false);
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
-` 
+  const showModal = () => {
+    setVisible(true);
+  };
 
-export const LoginTemplate: FunctionComponent<LoginTemplateProps> = ({LoginForm, ModalComponent}) => {
-
-    const [visible, setVisible] = useState(false)
-
-    const handleCancel = ()=>{
-        setVisible(false)
-    }
-
-    const showModal = ()=>{
-        setVisible(true)
-    }
-
-
-
-    return (
-    <Wrapper>
-        <LoginForm  showModal={showModal} />
-        <ModalComponent visible={visible} handleCancel={handleCancel} /> 
-    </Wrapper>
-    )
-}
+  return (
+    <div className="flex flex-col items-center h-screen px-32">
+      <LoginForm showModal={showModal} />
+      <ModalComponent visible={visible} handleCancel={handleCancel} />
+    </div>
+  );
+};
