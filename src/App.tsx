@@ -1,8 +1,12 @@
 import React from "react";
 import { TodoPage } from "./Components/Pages/TodoPage";
-import { ErrorPage } from "./Components/Pages/ErrorPage";
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 
 function App() {
   return (
@@ -18,7 +22,7 @@ function App() {
           <TodoPage filter="all" />
         </Route>
         <Route path="/">
-          <ErrorPage />
+          <Redirect to="/all" />
         </Route>
       </Switch>
     </Router>
