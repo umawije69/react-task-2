@@ -15,7 +15,7 @@
     "@types/styled-components": "^5.0.1",
     "@types/uuid": "^7.0.2",
     "antd": "^4.0.3",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-localization": "^1.0.15",
